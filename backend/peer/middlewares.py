@@ -41,7 +41,7 @@ class ExtractIPMiddleware(MiddlewareMixin):
             logger.debug("Check the db for more details", logging.DEBUG)
             ip_address(ip)
         except ValidationError:
-            logger.warning("Be careful! No IP found!", logging.WARNING)
+            logger.warning(f"Be careful! ---> {ip}", logging.WARNING)
             ip = None
 
         # Attach the IP address to the request object

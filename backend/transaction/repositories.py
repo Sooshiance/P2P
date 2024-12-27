@@ -2,8 +2,13 @@ from typing import BinaryIO
 
 from django.shortcuts import get_object_or_404
 
+from rest_framework import exceptions
+
 from .models import SharedFile, Peer
+from .validators import allowed_files_validator
+
 from user.models import User
+
 
 class SharedFileRepository:
     @classmethod
@@ -12,6 +17,10 @@ class SharedFileRepository:
 
     @classmethod
     def create_shared_file(owner: User, file: BinaryIO, name):
+        try:
+            allowed_files_validator(file)
+        except exceptions.NotAcceptable as e:
+            raise exceptions.ValidationError(detail=str(e))
         shared_file = SharedFile.objects.create(owner=owner, file=file, name=name)
         return shared_file
 
