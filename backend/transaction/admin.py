@@ -1,3 +1,12 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import (
+    Peer,
+)
+
+
+class PeerAdmin(admin.ModelAdmin):
+    list_display = ['user']
+
+
+admin.site.register(Peer, PeerAdmin)
