@@ -1,3 +1,5 @@
+from typing import Any
+
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -16,10 +18,14 @@ from user.repositories import UserRepository
 class SharedFileListCreateAPIView(views.APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
-        file = request.FILES.get("content", None)
-        name = request.data.get("name", None)
+    def post(
+        self, request: Request, *args: list[str], **kwargs: dict[str, Any]
+    ) -> Response:
+        file = request.FILES["file"]
+        name = request.data["name"]
         user = request.user
+
+        print(file)
 
         if not file:
             return Response(
@@ -40,7 +46,9 @@ class SharedFileDetailAPIView(generics.RetrieveDestroyAPIView):
     serializer_class = SharedFileSerializer
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request, *args, **kwargs):
+    def delete(
+        self, request: Request, *args: list[str], **kwargs: dict[str, Any]
+    ) -> Response:
         file_id = self.kwargs.get("pk")
         delete_shared_file_async.delay(file_id)
         return Response(status=status.HTTP_204_NO_CONTENT)
