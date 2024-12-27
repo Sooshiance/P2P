@@ -20,7 +20,7 @@ class SharedFile(models.Model):
 
 class Peer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="peers")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="peer_user")
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     last_seen = models.DateTimeField(auto_now=True)
 

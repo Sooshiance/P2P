@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    PermissionsMixin,
 )
 
 from .managers import AllUser
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     # Users can send phone or email to `username` field
     username = models.TextField(unique=True)
     # If phone was sent, this flag will become `True`
@@ -41,4 +40,4 @@ class OTP(models.Model):
     class Meta:
         ordering = ["-created_at"]
         verbose_name = "One Time Password"
-        verbose_name_plural = "One Time Password"
+        verbose_name_plural = "One Time Passwords"

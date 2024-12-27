@@ -9,7 +9,7 @@ from rest_framework.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 
-logging.basicConfig("IP.log", level=logging.WARNING)
+logging.basicConfig(filename="IP.log", level=logging.WARNING)
 
 
 class ExtractIPMiddleware(MiddlewareMixin):

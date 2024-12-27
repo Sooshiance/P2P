@@ -8,6 +8,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # api
     path("api/v1/user/", include("user.urls")),
+    path("api/v1/transaction/", include("transaction.urls")),
 ]
 
 

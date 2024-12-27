@@ -1,3 +1,5 @@
+from rest_framework import exceptions
+
 from .models import User, OTP
 
 
@@ -8,7 +10,10 @@ class UserRepository:
 
     @staticmethod
     def get_user_by_username(username) -> User:
-        return User.objects.get(username=username)
+        try:
+            return User.objects.get(username=username)
+        except exceptions.NotFound as e:
+            raise exceptions.ValidationError(str(e))
 
     @staticmethod
     def get_user_by_id(user_id) -> User:
